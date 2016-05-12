@@ -43,18 +43,18 @@ public class AnagramsII {
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		String line;
-		int casos, tamaño;
+		int casos, tamaÃ±o;
 		ArrayList<char[]> diccionario = new ArrayList<char[]>();
 		ArrayList<String> palabras = new ArrayList<String>();
 		casos = Integer.parseInt(in.readLine());
 		line = in.readLine();
 		while (casos>0) {
-			tamaño =  Integer.parseInt(in.readLine());
-			while(tamaño>0) {
+			tamaÃ±o =  Integer.parseInt(in.readLine());
+			while(tamaÃ±o>0) {
 				line = in.readLine();
 				if(line == null || line.isEmpty())
 					palabras.add(line);
-				tamaño--;
+				tamaÃ±o--;
 			}
 
 			Collections.sort(palabras);
