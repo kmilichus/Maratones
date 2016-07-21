@@ -1,0 +1,72 @@
+package maraton;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+
+public class godelDream {
+
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		String linea = in.readLine();
+		while(linea !=null){
+
+			char[] letras = linea.toCharArray(); 
+			for (int i = 0; i < letras.length; i++) {
+				if (letras[i]=='?') 
+					letras[i]='0';
+
+			}
+
+			int respuesta =  0, cuenta = 1;
+
+			boolean ok = true;
+
+			for(int i = 0 ; i< letras.length; ++i){
+				if(letras[i] == '0')
+					cuenta--;
+				else{
+					if(++cuenta > 1)
+						ok = false;  
+				}
+				
+//				for (int j = 0; j < letras.length; j++) {
+//					System.err.print(letras[i]);					
+//				}
+				
+//				System.out.println();
+				
+//				System.err.println("cuenta: "+ cuenta + "Paso i "+i);
+					if(cuenta == 0){
+						cuenta = 1;
+						ok = true;
+						respuesta++;
+					}
+				
+			}
+
+//			out.write(ok+"");
+
+			if (ok && cuenta==1) 
+				out.write(respuesta+"\n");
+			else 
+				out.write("0\n");
+
+
+
+			linea = in.readLine();
+		}
+
+		out.flush();
+		out.close();
+		in.close();
+
+	}
+
+
+}
