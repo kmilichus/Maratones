@@ -91,19 +91,21 @@ public class EjemploDijkstraAlcanzabilidad{
 		cola.add(new Pareja(0, inicio));                            // Se agrega la primera pareja (peso, vertice) como el inicio con peso 0 para empezar a trabajar
 		while (!cola.isEmpty()) {                                     // Mientras que la cola tenga parejas (peso, vertice) se debe seguir buscando las rutas mas cortas
 			actual = cola.poll();                                   // Se saca la pareja de menor peso, ya que es una cola de prioridad por peso
-			if (actual.peso == distancia[actual.vertice]) {           // Esta validacion es importante, npi
-				for (int j = 0; j < m.length; j++) {                                             // Se relajan los vertices
-					if (m[actual.vertice][j] != Integer.MAX_VALUE && // Aquellos a los que estoy conectado
-							distancia[actual.vertice] + m[actual.vertice][j] < distancia[j]) {    // Y cuya distancia es menor a travez de mi
-						distancia[j] = distancia[actual.vertice] + m[actual.vertice][j];         // Se asigna una nueva distancia
-						padre[j] = actual.vertice;                                                   // Se asigna un nuevo padre
-						cola.add(new Pareja(distancia[j], j));                                       // Se agrega a la cola de prioridad para ser trabajado despues
+			if (actual.peso == distancia[actual.vertice]) {           // Esta validacion es importante, no permite que se inunden los llamados a un mismo nodo por un mismo camino
+				for (int j = 0; j < m.length; j++) {                              				// Se relajan los vertices ->
+					if (m[actual.vertice][j] != Integer.MAX_VALUE && 					// Aquellos a los que estoy conectado ->
+							distancia[actual.vertice] + m[actual.vertice][j] < distancia[j]) {    	// Y cuya distancia es menor a travez de mi !
+						distancia[j] = distancia[actual.vertice] + m[actual.vertice][j];         // Se asigna una nueva distancia (La posible nueva distancia más corta)
+						padre[j] = actual.vertice;                                                   // Se asigna un nuevo padre (La nueva ruta)
+						cola.add(new Pareja(distancia[j], j));                                       // Se agrega a la cola de prioridad para ser trabajado despues (porque por ese camino pueden existe otra ruta más corta)
 					}
 				}
 			}
 		}
-
-		if (distancia[distancia.length-1] != Integer.MAX_VALUE) {
+	
+	//A estas alturas ya tenemos el arreglo de distancias y el arregolo de padres
+	// Con ellos podriamos encontrar el camino y la distancia más corta
+		if (distancia[distancia.length-1] != Integer.MAX_VALUE) { // Como solo es para saber si existe un camino, solo valido que la distancia no sea infinito.
 			llego =true;
 		}
 		return llego;
