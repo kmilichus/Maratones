@@ -6,4 +6,4 @@ Cualquier duda me pueden escribir al correo: camilo.barrios@correo.icesi.edu.co
 
 Saludos,
 
-Diviertantes
+Diviertanse!
