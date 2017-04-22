@@ -77,7 +77,7 @@ public class cat {
 	        
 	        for (int i = 0; i < mouseDoors[mouseStart].size(); ++i){
 	            if (!mouseVisided[mouseDoors[mouseStart].get(i)])
-	                possible |= CanFindPathHome(mouseDoors[mouseStart].get(i));
+	                possible |= CanMakeItHome(mouseDoors[mouseStart].get(i));
 	        }
 
 	        
@@ -103,7 +103,7 @@ public class cat {
 
 	}
 
-	private static boolean CanFindPathHome(int pos) {
+	private static boolean CanMakeItHome(int pos) {
 		
 			mouseVisided[pos] = true;
 		    if (catVisided[pos])
@@ -113,10 +113,10 @@ public class cat {
 		        return true;
 		    
 		    boolean canMakeIt = false;
-		    for (int i = 0; i < mouseDoors[pos].size(); ++i)
+		    for (int i = 0; i < mouseDoors[pos].size(); i++)
 		    {
 		        if (!mouseVisided[mouseDoors[pos].get(i)])
-		            canMakeIt |= CanFindPathHome(mouseDoors[pos].get(i));
+		            canMakeIt |= CanMakeItHome(mouseDoors[pos].get(i));
 		    }
 		    
 		    return canMakeIt;
