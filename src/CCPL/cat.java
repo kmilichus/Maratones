@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 public class cat {
@@ -9,8 +9,8 @@ public class cat {
 	static int mouseStart;
 
 
-	static ArrayList<Integer>[] catDoors;
-	static ArrayList<Integer>[] mouseDoors;
+	static LinkedList<Integer>[] catDoors;
+	static LinkedList<Integer>[] mouseDoors;
 
 	static boolean catVisided[];
 	static boolean mouseVisided[];
@@ -23,9 +23,8 @@ public class cat {
 
 
 		int T = Integer.parseInt(in.readLine());
-//		in.readLine();
-
-
+		in.readLine();
+		
 		while (T-->0) {
 
 
@@ -57,7 +56,7 @@ public class cat {
 
 
 			line = in.readLine();
-
+			outer:
 			while (!line.equals("")) {
 
 				stk = new StringTokenizer(line);
@@ -68,6 +67,9 @@ public class cat {
 				b--;
 				mouseDoors[a].add(b);
 				line = in.readLine();
+				if (line==null) {
+					break outer;
+				}
 			}
 
 
@@ -75,7 +77,7 @@ public class cat {
 
 	        boolean possible = false;
 	        
-	        for (int i = 0; i < mouseDoors[mouseStart].size(); ++i){
+	        for (int i = 0; i < mouseDoors[mouseStart].size(); i++){
 	            if (!mouseVisided[mouseDoors[mouseStart].get(i)])
 	                possible |= CanMakeItHome(mouseDoors[mouseStart].get(i));
 	        }
@@ -94,6 +96,10 @@ public class cat {
 	        
 	        sb.append((overlap ? 'Y' : 'N')+" ");
 	        sb.append((possible ? 'Y' : 'N')+"\n");
+	        
+	        if (T!=0) 
+				sb.append("\n");
+			
 
 	        out.write(sb.toString());
 		}
@@ -137,15 +143,14 @@ public class cat {
 
 	private static void init() {
 
-
-		catDoors = new ArrayList[nodes];
-		mouseDoors = new ArrayList[nodes];
+		catDoors = new LinkedList[nodes];
+		mouseDoors = new LinkedList[nodes];
 		catVisided = new boolean[nodes];
 		mouseVisided = new boolean[nodes];
 
 		for (int i = 0; i < nodes; i++) {
-			catDoors[i]= new ArrayList<Integer>();
-			mouseDoors[i]= new ArrayList<Integer>();
+			catDoors[i]= new LinkedList<Integer>();
+			mouseDoors[i]= new LinkedList<Integer>();
 		}
 
 	}
