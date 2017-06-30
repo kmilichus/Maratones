@@ -1,13 +1,10 @@
 import java.io.*;
 import java.util.*;
 
-public class problemB {
+public class problemBAdjacencyMatrix {
 
 	private static int m[][];
-	private static HashMap<Integer, Integer>[] g;
-
 	static int inf = 10000;
-
 
 	public static void main(String[] args) throws IOException {
 
@@ -30,10 +27,13 @@ public class problemB {
 			int s = Integer.parseInt(stk.nextToken());
 
 
-			g= new HashMap[n];
+
+//			LinkedList grafo = new LinkedList<LinkedList<Integer>>();
+
+			m= new int[n][n];
 
 			for (int i = 0; i < n; i++) 
-				g[i] = new HashMap<Integer, Integer>();
+				Arrays.fill(m[i], inf);
 
 
 			for (int i = 0; i < e; i++) {
@@ -41,9 +41,11 @@ public class problemB {
 				int u = Integer.parseInt(stk.nextToken());
 				int v = Integer.parseInt(stk.nextToken());
 				int w = Integer.parseInt(stk.nextToken());
-				g[u].put(v, w);
+				m[u][v]= w;
 			}
 
+
+			//TODO resolver dijkstra
 			int[] distancias = dijkstra(s);
 
 			for (int i = 0; i < q; i++) {
@@ -66,53 +68,32 @@ public class problemB {
 	}
 
 	static int[] dijkstra(int inicio) {
-		int distancia[] = new int[g.length];                    
-		int padre[] = new int[g.length]; 
-		boolean visited[] = new boolean[g.length];
-		boolean visitedAll;
+		int distancia[] = new int[m.length];                    
+		int padre[] = new int[m.length];                       
 		Pareja actual;                                              
 		PriorityQueue<Pareja> cola = new PriorityQueue<Pareja>();   
 
-		for (int i = 0; i < g.length; i++) {
+		for (int i = 0; i < m.length; i++) {
 			distancia[i] = inf;                       
-			padre[i] = -1;    
-			visited[i] = false;
+			padre[i] = -1;                                          
 		}
-
 		distancia[inicio] = 0;                                      
 		padre[inicio] = inicio;                                    
 
-		cola.add(new Pareja(0, inicio)); 
-
-
-		do {	
-			while (!cola.isEmpty()) {                                    
-				actual = cola.poll();   
-				visited[actual.vertice]=true;
-				if (actual.peso == distancia[actual.vertice]) {     
-
-					for (Map.Entry<Integer, Integer> entry : g[actual.vertice].entrySet()) {
-						//					System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
-						if (distancia[actual.vertice] + entry.getValue() < distancia[entry.getKey()]) {   
-							distancia[entry.getKey()] = distancia[actual.vertice] +entry.getValue();         
-							padre[entry.getKey()] = actual.vertice;                                                   
-							cola.add(new Pareja(distancia[entry.getKey()], entry.getKey()));                                       
-						} 			    
+		cola.add(new Pareja(0, inicio));                            
+		while (!cola.isEmpty()) {                                    
+			actual = cola.poll();                                   
+			if (actual.peso == distancia[actual.vertice]) {           
+				for (int j = 0; j < m.length; j++) {                              				
+					if (m[actual.vertice][j] != inf && 					
+							distancia[actual.vertice] + m[actual.vertice][j] < distancia[j]) {    	
+						distancia[j] = distancia[actual.vertice] + m[actual.vertice][j];         
+						padre[j] = actual.vertice;                                                   
+						cola.add(new Pareja(distancia[j], j));                                       
 					}
 				}
 			}
-			
-			visitedAll = true;
-			
-			for (int i = 0; i < visited.length && visitedAll; i++) {
-				if (!visited[i]) {
-					visitedAll = false;
-					cola.add(new Pareja(0, i));
-				}
-			}
-			
-			
-		} while (!visitedAll);
+		}
 
 
 		return distancia;
