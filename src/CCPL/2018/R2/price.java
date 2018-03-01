@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class price {
 
 	public static void main(String[] args) throws IOException{
-
+		//lectores
 		BufferedReader in=new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter out=new BufferedWriter(new OutputStreamWriter(System.out));
 		String line=in.readLine();
