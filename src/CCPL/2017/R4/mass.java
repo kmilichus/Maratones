@@ -70,7 +70,7 @@ public class mass {
 
 	public static void main(String[] args) throws IOException {
 
-
+		//LECTORES
 		BufferedReader in = new BufferedReader(new InputStreamReader (System.in) );
 		BufferedWriter out = new BufferedWriter (new OutputStreamWriter(System.out));
 
